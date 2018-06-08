@@ -7,9 +7,9 @@
     <delay>5000</delay>
     <transition>none</transition>
   </slideshow>
-  <folder uri="file:///home/or-master/a-z/b/bilder/main" recursive="true"/>
+  <folder uri="file://{{ basedir }}" recursive="true"/>
   <tests match="all">
-{% for cat in allcats %}
+{% for cat in list_off_all_tags.stdout_lines %}
     <test negative="true" id="comment::category" op="contains" value="{{ cat }}"/>
 {% endfor %}
   </tests>
