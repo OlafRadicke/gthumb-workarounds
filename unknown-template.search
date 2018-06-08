@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<search version="1.0">
+  <name>unknown-cats</name>
+  <files>
+  </files>
+  <slideshow personalize="false" automatic="true" wrap-around="false" random-order="false">
+    <delay>5000</delay>
+    <transition>none</transition>
+  </slideshow>
+  <folder uri="file:///home/or-master/a-z/b/bilder/main" recursive="true"/>
+  <tests match="all">
+{% for cat in allcats %}
+    <test negative="true" id="comment::category" op="contains" value="{{ cat }}"/>
+{% endfor %}
+  </tests>
+</search>

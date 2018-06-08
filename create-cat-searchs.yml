@@ -1,0 +1,139 @@
+---
+- hosts: all
+  vars:
+    basedir: "file:///home/or-master/a-z/b/bilder"
+  tasks:
+
+    - name: "clean up old cats"
+      file:
+        state: absent
+        path: "~/.local/share/gthumb/catalogs/"
+
+    - name: "create directory"
+      file:
+        path: "~/.local/share/gthumb/catalogs/"
+        state: directory
+
+### collacting all used cats ###
+
+    - name: "creat find all cats"
+      shell: find ../ -name "*.xml"  | grep "\.comments\/" | sed 's? ?\\ ?g' |  xargs cat | grep category | sed s/.*\<category\ value\=/\ \ \ \-\ /g | sed s?/\>??g | sort | uniq > ./allcats.yml
+
+### YEAR TAGS ###
+
+    - name: "clean up allyear vars"
+      shell: echo "allyear:" > ./allyear.yml
+
+    # - name: "creat allyear vars"
+    #   shell: cat ~/.config/gthumb/tags.xml | grep "tag " | sed s/\<tag\ value\=/\ \-\ /g | sed s:/\>::g | grep  '^   \- "[0-9][0-9][0-9][0-9]' | sort | uniq >> ./allyear.yml
+
+    - name: "creat allyear vars"
+      shell: cat ./allcats.yml | grep  '^   \- "[0-9][0-9][0-9][0-9]' >> ./allyear.yml
+
+    - name: "Include vars of all year cat"
+      include_vars:
+        file: "./allyear.yml"
+
+### ALL NON YEAR TAGS ###
+
+    - name: "clean up nonyear vars"
+      shell: echo "nonyear:" > ./nonyear.yml
+
+    - name: "creat nonyear vars"
+      shell: cat ~/.config/gthumb/tags.xml | grep "tag " | sed s/\<tag\ value\=/\ \-\ /g | sed s:/\>::g | grep -v '^   \- "[0-9][0-9][0-9][0-9]' | sort | uniq >> ./nonyear.yml
+
+    - name: "Include vars of non year cat"
+      include_vars:
+        file: "./nonyear.yml"
+
+
+    - name: "clean up all allvars"
+      shell: echo "allcats:" > ./allcats.yml
+
+    - name: "creat allcats vars"
+      shell: cat ~/.config/gthumb/tags.xml | grep "tag " | sed s/\<tag\ value\=/\ \-\ /g | sed s:/\>::g | sort >> ./allcats.yml
+
+    - name: "Include vars of all cat"
+      include_vars:
+        file: "./allcats.yml"
+
+    - debug:
+        msg: "{{ nonyear }}"
+
+    - debug:
+        msg: "{{ allyear }}"
+
+    - debug:
+        msg: "{{ allcats }}"
+
+### UNKNOW ###
+
+
+    - name: "create unknown_year.search"
+      template:
+        src: "./unknown-year.search"
+        dest: "~/.local/share/gthumb/catalogs/unknown-year.search"
+
+    - name: "create unknown_cats.search"
+      template:
+        src: "./unknown-template.search"
+        dest: "~/.local/share/gthumb/catalogs/unknown-cats.search"
+
+### ALLCATS ###
+
+    # - name: "copy temlptas"
+    #   copy:
+    #     src: "./cat-template.search"
+    #     dest: "~/.local/share/gthumb/catalogs/{{ item }}.search"
+    #   with_items: "{{ allcats }}"
+    #   delegate_to: localhost
+    #
+    # - ame: "replace key word"
+    #   replace:
+    #     path: "~/.local/share/gthumb/catalogs/{{ item }}.search"
+    #     regexp: 'tage_name'
+    #     replace: "{{ item }}"
+    #   with_items: "{{ allcats }}"
+    #   delegate_to: localhost
+
+#### YEARS ####
+    - name: "create directory"
+      file:
+        path: "~/.local/share/gthumb/catalogs/year"
+        state: directory
+
+    - name: "copy temlptas"
+      template:
+        src: "./cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/year/{{ item }}.search"
+      with_items: "{{ allyear }}"
+      delegate_to: localhost
+
+    - name: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/year/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ allyear }}"
+      delegate_to: localhost
+
+#### NONYEARS ####
+    - name: "create directory"
+      file:
+        path: "~/.local/share/gthumb/catalogs/tags"
+        state: directory
+
+    - name: "copy temlptas"
+      template:
+        src: "./cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
+      with_items: "{{ nonyear }}"
+      delegate_to: localhost
+
+    - ame: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ nonyear }}"
+      delegate_to: localhost

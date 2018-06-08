@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<search version="1.0">
+  <name>tage_name</name>
+  <files>
+  </files>
+  <slideshow personalize="false" automatic="true" wrap-around="false" random-order="false">
+    <delay>5000</delay>
+    <transition>none</transition>
+  </slideshow>
+  <folder uri="{{ basedir }}" recursive="true"/>
+  <tests match="all">
+    <test id="comment::category" op="contains" value="tage_name"/>
+  </tests>
+</search>
