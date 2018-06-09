@@ -1,0 +1,26 @@
+---
+
+# - name: "find all comments"
+#   shell: find {{ basedir }} -name '*.xml' -print0
+#   register: allcomments
+#
+# - debug:
+#     msg: "{{ allcomments.stdout_lines }}"
+
+- name: "find all orign files"
+  shell: find {{ basedir }} -name '*.xml'
+  register: allcomments
+
+# - debug:
+#     msg: "{{ allcomments.stdout_lines }}"
+
+# |  sed 's/\/.comments//g' |  sed 's/\/.xml//g'
+# - name: "find all not exists"
+#   shell: test -f "$( echo '{{ item }}'   |  sed 's/\/.comments//g' |  sed 's/\.xml//g' )" || echo "not exist {{ item }}" >> /tmp/delete-list.txt
+#   with_items: "{{ originnames.stdout_lines }}"
+#   register: notexist
+
+- name: "create /tmp/delete_abandoned_comments.sh"
+  template:
+    src: "../templates/delete_abandoned_comments-template.sh"
+    dest: "/tmp/delete_abandoned_comments.sh"

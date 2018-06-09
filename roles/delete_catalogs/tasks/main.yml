@@ -1,0 +1,11 @@
+---
+
+- name: "clean up old cats"
+  file:
+    state: absent
+    path: "~/.local/share/gthumb/catalogs/"
+
+- name: "create directory"
+  file:
+    path: "~/.local/share/gthumb/catalogs/"
+    state: directory

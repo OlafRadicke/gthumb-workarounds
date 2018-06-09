@@ -1,0 +1,29 @@
+---
+### ALL names TAGS ###
+
+- name: "creat allnames vars"
+  shell: /tmp/find_all_tags.sh | grep  '^y-'
+  register: allnames
+
+- debug:
+    msg: "{{ allnames.stdout_lines }}"
+
+- name: "create directory catalogs/names"
+  file:
+    path: "~/.local/share/gthumb/catalogs/names"
+    state: directory
+
+- name: "copy temlptas tags"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/names/{{ item }}.search"
+  with_items: "{{ allnames.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/names/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ allnames.stdout_lines }}"
+  delegate_to: localhost

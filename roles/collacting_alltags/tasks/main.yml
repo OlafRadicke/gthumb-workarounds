@@ -1,0 +1,13 @@
+---
+
+- name: "creat find all cats"
+  shell: /tmp/find_all_tags.sh
+  register: list_off_all_tags
+
+- debug:
+    msg: "{{ list_off_all_tags.stdout_lines }}"
+
+- name: "create unknown_cats.search"
+  template:
+    src: "../templates/tags-teamplate.xml"
+    dest: "~/.config/gthumb/tags.xml"

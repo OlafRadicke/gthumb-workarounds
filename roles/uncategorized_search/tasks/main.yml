@@ -1,0 +1,8 @@
+---
+
+### UNKNOW ###
+
+- name: "create uncategorized search"
+  template:
+    src: "../templates/uncategorized-template.search"
+    dest: "~/.local/share/gthumb/catalogs/uncategorized.search"

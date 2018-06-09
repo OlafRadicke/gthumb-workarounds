@@ -1,0 +1,29 @@
+---
+### ALL category TAGS ###
+
+- name: "creat allcats vars"
+  shell: /tmp/find_all_tags.sh | grep  '^c-'
+  register: allcats
+
+- debug:
+    msg: "{{ allcats.stdout_lines }}"
+
+- name: "create directory catalogs/tags"
+  file:
+    path: "~/.local/share/gthumb/catalogs/tags"
+    state: directory
+
+- name: "copy temlptas tags"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
+  with_items: "{{ allcats.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ allcats.stdout_lines }}"
+  delegate_to: localhost

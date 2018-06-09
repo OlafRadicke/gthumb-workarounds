@@ -1,0 +1,29 @@
+---
+### ALL nationality TAGS ###
+
+- name: "creat nationality vars"
+  shell: /tmp/find_all_tags.sh | grep  '^n-'
+  register: nationality
+
+- debug:
+    msg: "{{ nationality.stdout_lines }}"
+
+- name: "create directory catalogs/names"
+  file:
+    path: "~/.local/share/gthumb/catalogs/nationality"
+    state: directory
+
+- name: "copy temlptas tags"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/nationality/{{ item }}.search"
+  with_items: "{{ nationality.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/nationality/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ nationality.stdout_lines }}"
+  delegate_to: localhost

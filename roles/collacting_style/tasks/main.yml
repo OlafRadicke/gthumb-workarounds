@@ -1,0 +1,30 @@
+---
+
+### ALL style TAGS ###
+
+- name: "creat style vars"
+  shell: /tmp/find_all_tags.sh | grep  '^s-'
+  register: style
+
+- debug:
+    msg: "{{ style.stdout_lines }}"
+
+- name: "create directory catalogs/names"
+  file:
+    path: "~/.local/share/gthumb/catalogs/style"
+    state: directory
+
+- name: "copy temlptas tags"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/style/{{ item }}.search"
+  with_items: "{{ style.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/style/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ style.stdout_lines }}"
+  delegate_to: localhost

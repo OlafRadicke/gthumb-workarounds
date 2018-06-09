@@ -1,0 +1,29 @@
+---
+### ALL PERSON TAGS ###
+
+- name: "creat allperson vars"
+  shell: /tmp/find_all_tags.sh | grep  '^p_'
+  register: allperson
+
+- debug:
+    msg: "{{ allperson.stdout_lines }}"
+
+- name: "create directory catalogs/person"
+  file:
+    path: "~/.local/share/gthumb/catalogs/person"
+    state: directory
+
+- name: "copy temlptas person"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/person/{{ item }}.search"
+  with_items: "{{ allperson.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/person/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ allperson.stdout_lines }}"
+  delegate_to: localhost
