@@ -1,8 +1,21 @@
 ---
 - hosts: all
   vars:
-    basedir: "/home/or-master/a-z/b/bilder"
+    basedir: "/run/media/db5/backup/mm/db5/"
   tasks:
+
+    - name: find all files
+      shell: find /run/media/db5/backup/mm/db5/people_east/marcella-2/ -type f
+      register: allfilenames
+
+    - name: clean up file manes
+      shell: "mv '{{ item }}' $(echo '{{ item }}'  | sed -e 's/[^a-zA-Z0-9/_.-]/_/g') || true"
+      with_items: "{{ allfilenames.stdout_lines }}"
+
+
+    # - name: clean up file manes
+    #   shell: "echo '{{ item }}' | sed -e 's/[^a-zA-Z0-9/_.-]/_/g' >> /tmp/renaming.txt"
+    #   with_items: "{{ allfilenames.stdout_lines }}"
 
     - name: "clean up old cats"
       file:
@@ -35,74 +48,192 @@
     - debug:
         msg: "{{ list_off_all_tags.stdout_lines }}"
 
-### ALL YEAR TAGS ###
+### Update tag file ###
 
-    - name: "creat allyear vars"
-      shell: /tmp/find_all_tags.sh | grep  '^[0-9][0-9][0-9][0-9]'
-      register: allyear
+    - name: "create unknown_cats.search"
+      template:
+        src: "./templates/tags-teamplate.xml"
+        dest: "~/.config/gthumb/tags.xml"
+
+### ALL CAT TAGS ###
+
+    - name: "creat allcats vars"
+      shell: /tmp/find_all_tags.sh | grep  '^c-'
+      register: allcats
 
     - debug:
-        msg: "{{ allyear.stdout_lines }}"
+        msg: "{{ allcats.stdout_lines }}"
 
-    - name: "create directory"
+    - name: "create directory catalogs/tags"
       file:
-        path: "~/.local/share/gthumb/catalogs/year"
+        path: "~/.local/share/gthumb/catalogs/tags"
         state: directory
 
-    - name: "copy temlptas"
+    - name: "copy temlptas tags"
       template:
         src: "./templates/cat-template.search"
-        dest: "~/.local/share/gthumb/catalogs/year/{{ item }}.search"
-      with_items: "{{ allyear.stdout_lines }}"
+        dest: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
+      with_items: "{{ allcats.stdout_lines }}"
       delegate_to: localhost
 
     - name: "replace key word"
       replace:
-        path: "~/.local/share/gthumb/catalogs/year/{{ item }}.search"
+        path: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
         regexp: 'tage_name'
         replace: "{{ item }}"
-      with_items: "{{ allyear.stdout_lines }}"
+      with_items: "{{ allcats.stdout_lines }}"
       delegate_to: localhost
 
 
-### UNKNOW ###
+### ALL PERSON TAGS ###
 
-    - name: "create unknown_year.search"
+    - name: "creat allperson vars"
+      shell: /tmp/find_all_tags.sh | grep  '^p_'
+      register: allperson
+
+    - debug:
+        msg: "{{ allperson.stdout_lines }}"
+
+    - name: "create directory catalogs/person"
+      file:
+        path: "~/.local/share/gthumb/catalogs/person"
+        state: directory
+
+    - name: "copy temlptas person"
       template:
-        src: "./templates/unknown-year-template.search"
-        dest: "~/.local/share/gthumb/catalogs/unknown-year.search"
+        src: "./templates/cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/person/{{ item }}.search"
+      with_items: "{{ allperson.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/person/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ allperson.stdout_lines }}"
+      delegate_to: localhost
+
+### ALL names TAGS ###
+
+    - name: "creat allnames vars"
+      shell: /tmp/find_all_tags.sh | grep  '^y-'
+      register: allnames
+
+    - debug:
+        msg: "{{ allnames.stdout_lines }}"
+
+    - name: "create directory catalogs/names"
+      file:
+        path: "~/.local/share/gthumb/catalogs/names"
+        state: directory
+
+    - name: "copy temlptas tags"
+      template:
+        src: "./templates/cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/names/{{ item }}.search"
+      with_items: "{{ allnames.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/names/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ allnames.stdout_lines }}"
+      delegate_to: localhost
+
+### ALL nationality TAGS ###
+
+    - name: "creat nationality vars"
+      shell: /tmp/find_all_tags.sh | grep  '^n-'
+      register: nationality
+
+    - debug:
+        msg: "{{ nationality.stdout_lines }}"
+
+    - name: "create directory catalogs/names"
+      file:
+        path: "~/.local/share/gthumb/catalogs/nationality"
+        state: directory
+
+    - name: "copy temlptas tags"
+      template:
+        src: "./templates/cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/nationality/{{ item }}.search"
+      with_items: "{{ nationality.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/nationality/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ nationality.stdout_lines }}"
+      delegate_to: localhost
+
+
+### ALL style TAGS ###
+
+    - name: "creat style vars"
+      shell: /tmp/find_all_tags.sh | grep  '^s-'
+      register: style
+
+    - debug:
+        msg: "{{ style.stdout_lines }}"
+
+    - name: "create directory catalogs/names"
+      file:
+        path: "~/.local/share/gthumb/catalogs/style"
+        state: directory
+
+    - name: "copy temlptas tags"
+      template:
+        src: "./templates/cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/style/{{ item }}.search"
+      with_items: "{{ style.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/style/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ style.stdout_lines }}"
+      delegate_to: localhost
+
+#### NONPREFIX ####
+    - name: "create directory"
+      file:
+        path: "~/.local/share/gthumb/catalogs/nonprefix"
+        state: directory
+
+    - name: "creat nonyear vars"
+      shell: /tmp/find_all_tags.sh | grep -v '^y-'  | grep -v '^c-' | grep -v '^p_' | grep -v '^n-'  | grep -v '^s-'
+      register: nonprefix
+
+    - debug:
+        msg: "{{ nonprefix.stdout_lines }}"
+
+
+    - name: "copy temlptas"
+      template:
+        src: "./templates/cat-template.search"
+        dest: "~/.local/share/gthumb/catalogs/nonprefix/{{ item }}.search"
+      with_items: "{{ nonprefix.stdout_lines }}"
+      delegate_to: localhost
+
+    - ame: "replace key word"
+      replace:
+        path: "~/.local/share/gthumb/catalogs/nonprefix/{{ item }}.search"
+        regexp: 'tage_name'
+        replace: "{{ item }}"
+      with_items: "{{ nonprefix.stdout_lines }}"
+      delegate_to: localhost
+
+### UNKNOW ###
 
     - name: "create unknown_cats.search"
       template:
         src: "./templates/unknown-template.search"
         dest: "~/.local/share/gthumb/catalogs/unknown-cats.search"
-
-
-#### NONYEARS ####
-    - name: "create directory"
-      file:
-        path: "~/.local/share/gthumb/catalogs/tags"
-        state: directory
-
-    - name: "creat nonyear vars"
-      shell: /tmp/find_all_tags.sh | grep -v '^[0-9][0-9][0-9][0-9]'
-      register: nonyear
-
-    - debug:
-        msg: "{{ nonyear.stdout_lines }}"
-
-
-    - name: "copy temlptas"
-      template:
-        src: "./templates/cat-template.search"
-        dest: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
-      with_items: "{{ nonyear.stdout_lines }}"
-      delegate_to: localhost
-
-    - ame: "replace key word"
-      replace:
-        path: "~/.local/share/gthumb/catalogs/tags/{{ item }}.search"
-        regexp: 'tage_name'
-        replace: "{{ item }}"
-      with_items: "{{ nonyear.stdout_lines }}"
-      delegate_to: localhost
