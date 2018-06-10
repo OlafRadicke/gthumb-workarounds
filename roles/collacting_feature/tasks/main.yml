@@ -1,0 +1,29 @@
+---
+### ALL feature TAGS ###
+
+- name: "creat feature vars"
+  shell: /tmp/find_all_tags.sh | grep  '^f-'
+  register: feature
+
+- debug:
+    msg: "{{ feature.stdout_lines }}"
+
+- name: "create directory catalogs/names"
+  file:
+    path: "~/.local/share/gthumb/catalogs/feature"
+    state: directory
+
+- name: "copy temlptas tags"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/feature/{{ item }}.search"
+  with_items: "{{ feature.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/feature/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ feature.stdout_lines }}"
+  delegate_to: localhost
