@@ -14,7 +14,7 @@ The basedir variable has the information about the directory of your picture.
 
 enter:
 ```bash
-ansible-playbook -i ./hosts  ./create-cat-searchs.ym
+ansible-playbook -i ./hosts  gthumb_workarounds.yml
 ```
 # About the ansible roles #
 
