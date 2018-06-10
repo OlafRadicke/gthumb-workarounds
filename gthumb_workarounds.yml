@@ -8,7 +8,9 @@
     - collacting_alltags
     - uncategorized_search
     - collacting_category
-    - collacting_person
+    - collacting_feature
     - collacting_name
     - collacting_nationality
+    - collacting_nonprefix
+    - collacting_person
     - collacting_style

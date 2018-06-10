@@ -5,14 +5,8 @@
     path: "~/.local/share/gthumb/catalogs/nonprefix"
     state: directory
 
-# c- category
-# p_ person
-# n- nationality
-# s- style
-# y- name
-
 - name: "creat nonprefix vars"
-  shell: /tmp/find_all_tags.sh | grep -v '^y-'  | grep -v '^c-' | grep -v '^p_' | grep -v '^n-'  | grep -v '^s-'
+  shell: /tmp/find_all_tags.sh | grep -v '^y-' | grep -v '^c-' | grep -v '^p_' | grep -v '^n-' | grep -v '^s-' | grep -v '^f-'
   register: nonprefix
 
 - debug:
