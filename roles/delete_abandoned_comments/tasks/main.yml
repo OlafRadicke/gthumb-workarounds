@@ -1,26 +1,35 @@
 ---
 
-# - name: "find all comments"
-#   shell: find {{ basedir }} -name '*.xml' -print0
-#   register: allcomments
-#
-# - debug:
-#     msg: "{{ allcomments.stdout_lines }}"
 
 - name: "find all orign files"
   shell: find {{ basedir }} -name '*.xml'
   register: allcomments
 
-# - debug:
-#     msg: "{{ allcomments.stdout_lines }}"
+# - name: "create /tmp/double_check.sh"
+#   template:
+#     src: "../templates/double_check-template.sh"
+#     dest: "/tmp/double_check.sh"
 
-# |  sed 's/\/.comments//g' |  sed 's/\/.xml//g'
-# - name: "find all not exists"
-#   shell: test -f "$( echo '{{ item }}'   |  sed 's/\/.comments//g' |  sed 's/\.xml//g' )" || echo "not exist {{ item }}" >> /tmp/delete-list.txt
-#   with_items: "{{ originnames.stdout_lines }}"
-#   register: notexist
-
-- name: "create /tmp/delete_abandoned_comments.sh"
+- name: "create /tmp/find_abandoned_comments.sh"
   template:
-    src: "../templates/delete_abandoned_comments-template.sh"
-    dest: "/tmp/delete_abandoned_comments.sh"
+    src: "../templates/find_abandoned_comments-template.sh"
+    dest: "/tmp/find_abandoned_comments.sh"
+
+- name: "find all abandoned comments"
+  shell: "bash /tmp/find_abandoned_comments.sh"
+  register: all_abandoned_comments
+
+- debug:
+    msg: "{{ all_abandoned_comments.stdout_lines }}"
+
+- name: "delede /tmp/find_abandoned_comments.sh"
+  file:
+    path: /tmp/find_abandoned_comments.sh
+    state: absent
+
+
+- name: "delede abandoned comments"
+  file:
+    path: rm {{ item }}
+    state: absent
+  with_items: "{{ all_abandoned_comments.stdout_lines }}"

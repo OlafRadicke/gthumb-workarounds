@@ -6,10 +6,11 @@
   shell: find {{ basedir }} -type f
   register: allfilenames
 
-# - name: clean up file manes
-#   shell: "mv '{{ item }}' $(echo '{{ item }}'  | sed -e 's/[^a-zA-Z0-9/_.-]/_/g') || true"
-#   with_items: "{{ allfilenames.stdout_lines }}"
 
-- name: clean up file manes
+- debug:
+    msg: "{{allfilenames.stdout_lines }}"
+
+
+- name: clean up file names
   shell: mv "{{ item }}" $(echo "{{ item }}"  | sed -e 's/[^a-zA-Z0-9/_.-]/_/g') || true
   with_items: "{{ allfilenames.stdout_lines }}"

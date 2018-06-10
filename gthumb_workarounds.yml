@@ -1,8 +1,8 @@
 ---
 - hosts: all
   roles:
-    - delete_abandoned_comments
 #    - cleanup_filenames
+    - delete_abandoned_comments
     # - delete_catalogs
     # - create_find_all_tags
     # - collacting_alltags
@@ -12,4 +12,3 @@
     # - collacting_name
     # - collacting_nationality
     # - collacting_style
-    
