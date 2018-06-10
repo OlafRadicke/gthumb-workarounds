@@ -29,6 +29,6 @@
 
 - name: "delede abandoned comments"
   file:
-    path: rm {{ item }}
+    path: "{{ item }}"
     state: absent
   with_items: "{{ all_abandoned_comments.stdout_lines }}"
