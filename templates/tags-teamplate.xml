@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tags version="1.0">
-{% for tag in list_off_all_tags.stdout_lines %}
-  <tag value="{{ tag }}"/>
-{% endfor %}
-</tags>
