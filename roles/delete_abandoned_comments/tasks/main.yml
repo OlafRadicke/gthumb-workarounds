@@ -27,7 +27,6 @@
     path: /tmp/find_abandoned_comments.sh
     state: absent
 
-
 - name: "delede abandoned comments"
   file:
     path: rm {{ item }}

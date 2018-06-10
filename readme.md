@@ -32,9 +32,11 @@ ansible-playbook -i ./hosts  ./create-cat-searchs.ym
 * n- nationality
 * s- style
 * y- name
+* f- feature
 
 ###  collacting_category ###
 ###  collacting_person ###
 ###  collacting_name ###
 ###  collacting_nationality ###
 ###  collacting_style ###
+###  collacting_feature ###
