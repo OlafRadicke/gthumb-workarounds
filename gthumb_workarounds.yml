@@ -3,12 +3,12 @@
   roles:
 #    - cleanup_filenames
     - delete_abandoned_comments
-    # - delete_catalogs
-    # - create_find_all_tags
-    # - collacting_alltags
-    # - uncategorized_search
-    # - collacting_category
-    # - collacting_person
-    # - collacting_name
-    # - collacting_nationality
-    # - collacting_style
+    - delete_catalogs
+    - create_find_all_tags
+    - collacting_alltags
+    - uncategorized_search
+    - collacting_category
+    - collacting_person
+    - collacting_name
+    - collacting_nationality
+    - collacting_style
