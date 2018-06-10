@@ -1,2 +1,0 @@
-[all]
-localhost ansible_connection=local basedir="/run/media/db5/backup/mm/db5/"
