@@ -5,12 +5,12 @@
     - delete_abandoned_comments
     - delete_catalogs
     - create_find_all_tags
-    - collacting_alltags
+    - collecting_alltags
     - uncategorized_search
-    - collacting_category
-    - collacting_feature
-    - collacting_name
-    - collacting_nationality
-    - collacting_nonprefix
-    - collacting_person
-    - collacting_style
+    - collecting_category
+    - collecting_feature
+    - collecting_name
+    - collecting_nationality
+    - collecting_nonprefix
+    - collecting_person
+    - collecting_style

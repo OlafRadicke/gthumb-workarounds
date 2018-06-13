@@ -19,13 +19,32 @@ ansible-playbook -i ./hosts  gthumb_workarounds.yml
 # About the ansible roles #
 
 ##  cleanup_filenames ##
+
+This role removes diese rolle entfernt alle Sonderzeichen in Dateinamen und ersetzt sie durch "\_"
+
 ##  delete_abandoned_comments ##
+
+This role removes all orphaned xml (comment) files.
+
 ##  delete_catalogs ##
+
+This role removes all searches/catalogs
+
 ##  create_find_all_tags ##
-##  collacting_alltags ##
+
+This role creates a bash script to find all used "comment::category" values.
+
+##  collecting_alltags ##
+
+This role collecting all values of "comment::category" that's in use.
+
 ##  uncategorized_search ##
 
+This role collects all the files that "comment::category" does not use.
+
 ## Sub category ##
+
+The playbook takes into account the following subcategories
 
 * c- category
 * p_ person
@@ -34,9 +53,34 @@ ansible-playbook -i ./hosts  gthumb_workarounds.yml
 * y- name
 * f- feature
 
-###  collacting_category ###
-###  collacting_person ###
-###  collacting_name ###
-###  collacting_nationality ###
-###  collacting_style ###
-###  collacting_feature ###
+And divide it into subfolders...
+
+###  collecting_category ###
+
+Collecting all pictures with a sub categories "category" ("c-") and creates catalogs.
+
+###  collecting_person ###
+
+Collecting all pictures with a sub categories "person" ("p_") and creates catalogs.
+
+###  collecting_name ###
+
+Collecting all pictures with a sub categories "name" ("y-") and creates catalogs.
+
+###  collecting_nationality ###
+
+Collecting all pictures with a sub categories "name" ("n-") and creates catalogs.
+
+###  collecting_style ###
+
+Collecting all pictures with a sub categories "style" ("s-") and creates catalogs.
+
+
+###  collecting_feature ###
+
+Collecting all pictures with a sub categories "feature ("f-") and creates catalogs.
+
+# Known issues #
+* The playbook is very slowly
+* " and ' in file name is not removed by the role "cleanup_filenames"
+* The role "delete_abandoned_comments" delede all xml files in the path how is set in the variable "basedir", if the xml file is not a valide comments file
