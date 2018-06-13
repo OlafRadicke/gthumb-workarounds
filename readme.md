@@ -37,7 +37,7 @@ This role creates a bash script to find all used "comment::category" values.
 ##  collecting_alltags ##
 
 This role collecting all values of "comment::category" that's in use and  
-creates a new "~/.config/gthumb/tags.xml" file.
+creates a new "~/.config/gthumb/tags.xml" file."
 
 ##  uncategorized_search ##
 
