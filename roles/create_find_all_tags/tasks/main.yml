@@ -1,15 +1,7 @@
 ---
 
-- name: "clean up old cats"
-  file:
-    state: absent
-    path: "/tmp/find_all_tags.sh"
-
 - name: "create ./find_all_tags.sh"
   template:
     src: "./templates/find_all_tags_template.sh"
     dest: "/tmp/find_all_tags.sh"
-
-- file:
-    path: /tmp/find_all_tags.sh
     mode: 0777
