@@ -85,3 +85,8 @@ Collecting all pictures with a sub categories "feature ("f-") and creates catalo
 * The playbook is very slowly
 * " and ' in file name is not removed by the role "cleanup_filenames"
 * The role "delete_abandoned_comments" delede all xml files in the path how is set in the variable "basedir", if the xml file is not a valide comments file
+
+# Dodos #
+
+* Add tag for epochs "-e"
+* Add clean up job for tempory bash scripts in /tmp
