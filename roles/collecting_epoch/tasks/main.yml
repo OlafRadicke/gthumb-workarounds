@@ -2,28 +2,28 @@
 ### ALL feature TAGS ###
 
 - name: "creat feature vars"
-  shell: "{{ find_all_tags }} | grep  '^f-'"
+  shell: "{{ find_all_tags }} | grep  '^e-'"
   register: feature
   ignore_errors: True
 
 - debug:
     msg: "{{ feature.stdout_lines }}"
 
-- name: "create directory catalogs/names"
+- name: "create directory catalogs/epochs"
   file:
-    path: "~/.local/share/gthumb/catalogs/feature"
+    path: "~/.local/share/gthumb/catalogs/epochs"
     state: directory
 
-- name: "copy temlptas tags"
+- name: "copy temlptas search"
   template:
     src: "./templates/cat-template.search"
-    dest: "~/.local/share/gthumb/catalogs/feature/{{ item }}.search"
+    dest: "~/.local/share/gthumb/catalogs/epochs/{{ item }}.search"
   with_items: "{{ feature.stdout_lines }}"
   delegate_to: localhost
 
 - name: "replace key word"
   replace:
-    path: "~/.local/share/gthumb/catalogs/feature/{{ item }}.search"
+    path: "~/.local/share/gthumb/catalogs/epochs/{{ item }}.search"
     regexp: 'tage_name'
     replace: "{{ item }}"
   with_items: "{{ feature.stdout_lines }}"

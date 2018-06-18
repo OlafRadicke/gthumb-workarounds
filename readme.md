@@ -48,6 +48,8 @@ This role collects all the files that "comment::category" does not use.
 The playbook takes into account the following subcategories
 
 * c- category
+* e- epochs
+* l- location
 * p- person
 * n- nationality
 * s- style
@@ -59,6 +61,10 @@ And divide it into subfolders...
 ###  collecting_category ###
 
 Collecting all pictures with a sub categories "category" ("c-") and creates catalogs.
+
+###  collecting_epochs ###
+
+Collecting all epochs with a sub categories "epochs" ("e-") and creates catalogs.
 
 ###  collecting_person ###
 

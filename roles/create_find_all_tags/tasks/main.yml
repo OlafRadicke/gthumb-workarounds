@@ -3,5 +3,5 @@
 - name: "create ./find_all_tags.sh"
   template:
     src: "./templates/find_all_tags_template.sh"
-    dest: "/tmp/find_all_tags.sh"
+    dest: "{{ find_all_tags }}"
     mode: 0777

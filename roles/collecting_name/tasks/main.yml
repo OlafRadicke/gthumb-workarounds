@@ -2,7 +2,7 @@
 ### ALL names TAGS ###
 
 - name: "creat allnames vars"
-  shell: /tmp/find_all_tags.sh | grep  '^y-'
+  shell: "{{ find_all_tags }} | grep  '^y-'"
   register: allnames
   ignore_errors: True
 

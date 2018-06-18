@@ -3,7 +3,7 @@
 ### ALL style TAGS ###
 
 - name: "creat style vars"
-  shell: /tmp/find_all_tags.sh | grep  '^s-'
+  shell: "{{ find_all_tags }} | grep  '^s-'"
   register: style
   ignore_errors: True
 

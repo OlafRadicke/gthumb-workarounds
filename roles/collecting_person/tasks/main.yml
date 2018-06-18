@@ -2,7 +2,7 @@
 ### ALL PERSON TAGS ###
 
 - name: "creat allperson vars"
-  shell: /tmp/find_all_tags.sh | grep  '^p-'
+  shell: "{{ find_all_tags }} | grep  '^p-'"
   register: allperson
   ignore_errors: True
 

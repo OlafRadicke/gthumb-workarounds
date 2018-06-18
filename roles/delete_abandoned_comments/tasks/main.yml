@@ -10,22 +10,17 @@
 #     src: "../templates/double_check-template.sh"
 #     dest: "/tmp/double_check.sh"
 
-- name: "create /tmp/find_abandoned_comments.sh"
+- name: "create {{ find_abandoned_comments }}"
   template:
     src: "../templates/find_abandoned_comments-template.sh"
-    dest: "/tmp/find_abandoned_comments.sh"
+    dest: "{{ find_abandoned_comments }}"
 
 - name: "find all abandoned comments"
-  shell: "bash /tmp/find_abandoned_comments.sh"
+  shell: "bash {{ find_abandoned_comments }}"
   register: all_abandoned_comments
 
 - debug:
     msg: "{{ all_abandoned_comments.stdout_lines }}"
-
-- name: "delede /tmp/find_abandoned_comments.sh"
-  file:
-    path: /tmp/find_abandoned_comments.sh
-    state: absent
 
 - name: "delede abandoned comments"
   file:

@@ -6,7 +6,7 @@
     state: directory
 
 - name: "creat nonprefix vars"
-  shell: /tmp/find_all_tags.sh | grep -v '^y-' | grep -v '^c-' | grep -v '^p-' | grep -v '^n-' | grep -v '^s-' | grep -v '^f-'
+  shell: "{{ find_all_tags }} | grep -v '^y-' | grep -v '^c-' | grep -v '^p-' | grep -v '^n-' | grep -v '^s-' | grep -v '^f-'"
   register: nonprefix
 
 - debug:

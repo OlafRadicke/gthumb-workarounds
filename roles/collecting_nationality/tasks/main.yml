@@ -2,7 +2,7 @@
 ### ALL nationality TAGS ###
 
 - name: "creat nationality vars"
-  shell: /tmp/find_all_tags.sh | grep  '^n-'
+  shell: "{{ find_all_tags }} | grep  '^n-'"
   register: nationality
   ignore_errors: True
 

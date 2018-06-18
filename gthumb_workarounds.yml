@@ -1,5 +1,8 @@
 ---
 - hosts: all
+  vars:
+    - find_all_tags: "~/.local/share/find_all_tags.sh"
+    - find_abandoned_comments: "~/.local/share/find_abandoned_comments.sh"
   roles:
 #    - cleanup_filenames
     - delete_abandoned_comments
@@ -8,7 +11,9 @@
     - collecting_alltags
     - uncategorized_search
     - collecting_category
+    - collecting_epoch
     - collecting_feature
+    - collecting_location
     - collecting_name
     - collecting_nationality
     - collecting_nonprefix

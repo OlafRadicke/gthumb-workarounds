@@ -1,7 +1,7 @@
 ---
 
 - name: "creat find all cats"
-  shell: /tmp/find_all_tags.sh
+  shell: "{{ find_all_tags }}"
   register: list_off_all_tags
 
 - debug:
