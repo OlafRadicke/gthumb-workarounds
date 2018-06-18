@@ -5,6 +5,7 @@
 - name: "creat style vars"
   shell: /tmp/find_all_tags.sh | grep  '^s-'
   register: style
+  ignore_errors: True
 
 - debug:
     msg: "{{ style.stdout_lines }}"

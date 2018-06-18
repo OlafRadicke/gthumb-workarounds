@@ -4,6 +4,7 @@
 - name: "creat allcats vars"
   shell: /tmp/find_all_tags.sh | grep  '^c-'
   register: allcats
+  ignore_errors: True
 
 - debug:
     msg: "{{ allcats.stdout_lines }}"

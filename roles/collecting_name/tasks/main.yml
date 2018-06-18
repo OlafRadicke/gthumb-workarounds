@@ -4,6 +4,7 @@
 - name: "creat allnames vars"
   shell: /tmp/find_all_tags.sh | grep  '^y-'
   register: allnames
+  ignore_errors: True
 
 - debug:
     msg: "{{ allnames.stdout_lines }}"

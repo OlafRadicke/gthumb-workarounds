@@ -4,6 +4,7 @@
 - name: "creat nationality vars"
   shell: /tmp/find_all_tags.sh | grep  '^n-'
   register: nationality
+  ignore_errors: True
 
 - debug:
     msg: "{{ nationality.stdout_lines }}"
