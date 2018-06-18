@@ -20,7 +20,7 @@ ansible-playbook -i ./hosts  gthumb_workarounds.yml
 
 ##  cleanup_filenames ##
 
-This role removes diese rolle entfernt alle Sonderzeichen in Dateinamen und ersetzt sie durch "\_"
+This role removes all special characters in file names and replaces them with "\_"
 
 ##  delete_abandoned_comments ##
 
@@ -48,7 +48,7 @@ This role collects all the files that "comment::category" does not use.
 The playbook takes into account the following subcategories
 
 * c- category
-* p_ person
+* p- person
 * n- nationality
 * s- style
 * y- name
