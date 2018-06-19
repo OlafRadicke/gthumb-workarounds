@@ -20,7 +20,7 @@
   with_items: "{{ nonprefix.stdout_lines }}"
   delegate_to: localhost
 
-- ame: "replace key word"
+- name: "replace key word"
   replace:
     path: "~/.local/share/gthumb/catalogs/nonprefix/{{ item }}.search"
     regexp: 'tage_name'
