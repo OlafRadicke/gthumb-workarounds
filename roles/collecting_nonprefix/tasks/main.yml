@@ -5,8 +5,17 @@
     path: "~/.local/share/gthumb/catalogs/nonprefix"
     state: directory
 
+* c- category
+* e- epochs
+* f- feature
+* l- location
+* n- nationality
+* p- person
+* s- style
+* y- name
+
 - name: "creat nonprefix vars"
-  shell: "{{ find_all_tags }} | grep -v '^y-' | grep -v '^c-' | grep -v '^p-' | grep -v '^n-' | grep -v '^s-' | grep -v '^f-'"
+  shell: "{{ find_all_tags }} | grep -v '^c-' | grep -v '^e-' | grep -v '^f-'" | grep -v '^l-' | grep -v '^n-' | grep -v '^p-' | grep -v '^s-' | grep -v '^y-'
   register: nonprefix
 
 - debug:
