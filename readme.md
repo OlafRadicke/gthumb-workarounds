@@ -49,12 +49,12 @@ The playbook takes into account the following subcategories
 
 * c- category
 * e- epochs
+* f- feature
 * l- location
-* p- person
 * n- nationality
+* p- person
 * s- style
 * y- name
-* f- feature
 
 And divide it into subfolders...
 
