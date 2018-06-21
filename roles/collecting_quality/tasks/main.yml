@@ -1,0 +1,30 @@
+---
+### ALL feature TAGS ###
+
+- name: "creat feature vars"
+  shell: "{{ find_all_tags }} | grep  '^q-'"
+  register: feature
+  ignore_errors: True
+
+- debug:
+    msg: "{{ feature.stdout_lines }}"
+
+- name: "create directory catalogs/quality"
+  file:
+    path: "~/.local/share/gthumb/catalogs/quality"
+    state: directory
+
+- name: "copy temlptas search"
+  template:
+    src: "./templates/cat-template.search"
+    dest: "~/.local/share/gthumb/catalogs/quality/{{ item }}.search"
+  with_items: "{{ feature.stdout_lines }}"
+  delegate_to: localhost
+
+- name: "replace key word"
+  replace:
+    path: "~/.local/share/gthumb/catalogs/quality/{{ item }}.search"
+    regexp: 'tage_name'
+    replace: "{{ item }}"
+  with_items: "{{ feature.stdout_lines }}"
+  delegate_to: localhost

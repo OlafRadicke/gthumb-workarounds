@@ -54,6 +54,7 @@ The playbook takes into account the following subcategories
 * n- nationality
 * p- person
 * s- style
+* q- quality
 * y- name
 
 And divide it into subfolders...
